@@ -3,6 +3,9 @@ import { History, Award, Clapperboard, Star } from "lucide-react";
 import { CORES } from "../constantes";
 
 export function SecaoAutor() {
+  // Define o prefixo manualmente aqui para garantir o caminho no cPanel
+  const basePath = '/cinemadebolso';
+
   return (
     <section className="py-32 px-6 relative overflow-hidden isolate" style={{ backgroundColor: CORES.bgCard }}>
       <div className="max-w-6xl mx-auto relative z-10">
@@ -12,7 +15,7 @@ export function SecaoAutor() {
             <div className="absolute -inset-4 bg-yellow-500/10 blur-3xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
             <div className="relative aspect-[4/5] w-full max-w-md mx-auto rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl">
               <Image 
-                src="/foto1.jpeg" 
+                src={`${basePath}/foto1.jpeg`} 
                 alt="Bruno Camargo Buemo" 
                 fill 
                 className="object-cover transition-transform duration-700 group-hover:scale-105"

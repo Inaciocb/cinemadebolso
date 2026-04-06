@@ -1,6 +1,11 @@
 import Image from "next/image";
 import { CORES } from "../constantes";
 
+// Importações estáticas das imagens
+import foto1 from "@/public/foto1.jpeg";
+import foto2 from "@/public/foto2.jpeg";
+import logo from "@/public/logo.png";
+
 export function Hero() {
   return (
     <section className="relative flex flex-col items-center pt-12 md:pt-24 pb-24 px-4 text-center min-h-[90vh] justify-center overflow-hidden isolate">
@@ -27,7 +32,7 @@ export function Hero() {
               WebkitMaskImage: 'radial-gradient(ellipse, black 20%, transparent 75%)'
             }}
           >
-            <Image src="/foto1.jpeg" alt="Background 1" fill className="object-cover" priority />
+            <Image src={foto1} alt="Background 1" fill className="object-cover" priority />
             <div 
               className="absolute inset-0" 
               style={{ 
@@ -45,7 +50,7 @@ export function Hero() {
               WebkitMaskImage: 'radial-gradient(ellipse, black 20%, transparent 75%)'
             }}
           >
-            <Image src="/foto2.jpeg" alt="Background 2" fill className="object-cover" priority />
+            <Image src={foto2} alt="Background 2" fill className="object-cover" priority />
             <div 
               className="absolute inset-0" 
               style={{ 
@@ -59,10 +64,9 @@ export function Hero() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px] h-[500px] opacity-5 blur-[140px] -z-20 pointer-events-none" style={{ backgroundColor: CORES.accent }} />
 
       <div className="relative z-10 flex flex-col items-center w-full">
-        {/* Logo adicionada aqui */}
         <div className="relative w-32 h-16 md:w-48 md:h-24 mb-8">
           <Image 
-            src="/logo.png" 
+            src={logo} 
             alt="Logo Cinema de Bolso" 
             fill 
             className="object-contain" 

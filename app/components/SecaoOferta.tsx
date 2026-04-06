@@ -6,6 +6,7 @@ import { CORES } from "../constantes";
 
 export function SecaoOferta() {
   const hotmartLink = "https://pay.hotmart.com/A102928754K?bid=1773919814637";
+  const basePath = '/cinemadebolso';
 
   const itensDestaque = [
     { icon: <Sun size={18} />, text: "Luz e Estética" },
@@ -70,10 +71,9 @@ export function SecaoOferta() {
                  }}>
               
               <div className="space-y-4">
-                {/* Logo aumentada */}
                 <div className="relative w-48 h-24 mx-auto mb-4">
                   <Image 
-                    src="/logo.png" 
+                    src={`${basePath}/logo.png`} 
                     alt="Logo Cinema de Bolso" 
                     fill 
                     className="object-contain"

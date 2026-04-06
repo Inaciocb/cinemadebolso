@@ -8,10 +8,12 @@ import { CORES } from "../constantes";
 export function SecaoFuncionamento() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
+  const basePath = '/cinemadebolso';
+
   const prints = [
-    { src: "/curso1.png", alt: "Interface do curso 1", desc: "Área inicial" },
-    { src: "/curso2.png", alt: "Interface do curso 2", desc: "Visualização dos módulos" },
-    { src: "/curso3.png", alt: "Interface do curso 3", desc: "Visualização da aula" }
+    { src: `${basePath}/curso1.png`, alt: "Interface do curso 1", desc: "Área inicial" },
+    { src: `${basePath}/curso2.png`, alt: "Interface do curso 2", desc: "Visualização dos módulos" },
+    { src: `${basePath}/curso3.png`, alt: "Interface do curso 3", desc: "Visualização da aula" }
   ];
 
   return (
