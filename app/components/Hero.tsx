@@ -9,7 +9,7 @@ export function Hero() {
         <div 
           className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-full h-[200px] blur-[80px] opacity-30"
           style={{ 
-            background: `radial-gradient(ellipse at center, ${CORES.accentLight} 0%, transparent 80%)` 
+            background: `radial-gradient(ellipse at center, ${CORES.cta} 0%, transparent 5%)` 
           }} 
         />
         <div 

@@ -109,7 +109,6 @@ export function SecaoOferta() {
               </div>
 
               <div className="space-y-4 pt-4">
-                {/* Botão padrão Hero */}
                 <div className="relative group">
                   <div className="absolute inset-0 rounded-xl blur-xl animate-pulse opacity-60 -z-10" style={{ backgroundColor: CORES.cta }} />
                   
