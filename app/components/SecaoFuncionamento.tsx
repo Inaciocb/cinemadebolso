@@ -57,11 +57,13 @@ export function SecaoFuncionamento() {
           {prints.map((print, idx) => (
             <div key={idx} className="flex flex-col gap-6 group cursor-zoom-in" onClick={() => setSelectedImage(print.src)}>
               <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-white/30 group-hover:shadow-yellow-500/5">
+               
                 <Image 
                   src={print.src} 
                   alt={print.alt} 
                   fill 
                   className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  unoptimized 
                 />
                 <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
               </div>
@@ -111,6 +113,7 @@ export function SecaoFuncionamento() {
               fill 
               className="object-contain bg-zinc-900"
               quality={100}
+              unoptimized
             />
           </div>
         </div>
