@@ -36,7 +36,7 @@ export function SecaoFuncionamento() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
               <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
                 <Clock size={20} style={{ color: CORES.accent }} />
-                <span className="text-xs font-black uppercase tracking-widest text-zinc-300">Aulas de 5 a 15 min</span>
+                <span className="text-xs font-black uppercase tracking-widest text-zinc-300">Aulas objetivas de até 15min</span>
               </div>
               <div className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 border border-white/5">
                 <Laptop size={20} style={{ color: CORES.accent }} />
