@@ -1,20 +1,71 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import Image from "next/image";
 import { Laptop, Clock, CheckCircle, X } from "lucide-react";
 import { CORES } from "../constantes";
 
 export function SecaoFuncionamento() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   const basePath = '/cinemadebolso';
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (selectedImage) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [selectedImage]);
 
   const prints = [
     { src: `${basePath}/curso1.png`, alt: "Interface do curso 1", desc: "Área inicial" },
     { src: `${basePath}/curso2.png`, alt: "Interface do curso 2", desc: "Visualização dos módulos" },
     { src: `${basePath}/curso3.png`, alt: "Interface do curso 3", desc: "Visualização da aula" }
   ];
+
+  const ModalPortal = () => {
+    if (!selectedImage || !mounted) return null;
+
+    return createPortal(
+      <div 
+        className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/95 backdrop-blur-md animate-in fade-in duration-300 px-4 md:px-12"
+        onClick={() => setSelectedImage(null)}
+      >
+        <button 
+          className="absolute top-6 right-6 md:top-10 md:right-10 text-white/50 hover:text-white transition-colors z-[10000] p-2"
+          onClick={() => setSelectedImage(null)}
+          aria-label="Fechar preview"
+        >
+          <X size={48} />
+        </button>
+        
+        <div 
+          className="relative w-full max-w-6xl aspect-video rounded-2xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)] border border-white/10"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <Image 
+            src={selectedImage} 
+            alt="Preview ampliado" 
+            fill 
+            className="object-contain bg-zinc-950"
+            quality={100}
+            unoptimized
+          />
+        </div>
+      </div>,
+      document.body
+    );
+  };
 
   return (
     <section className="py-32 px-6 relative overflow-hidden isolate" style={{ backgroundColor: CORES.bgDeep }}>
@@ -30,7 +81,7 @@ export function SecaoFuncionamento() {
             </p>
             <div className="space-y-4 text-lg text-zinc-400 leading-relaxed">
               <p>As aulas estão organizadas em módulos curtos e diretos, para que você consiga assistir, entender e colocar em prática imediatamente.</p>
-              <p>Você terá acesso vitalício pela <span className="text-white font-bold">Hotmart</span>, em uma área de membros simples, intuitiva e organizada para o seu progresso.</p>
+              <p>Você terá acesso pela <span className="text-white font-bold">Hotmart</span>, em uma área de membros intuitiva e organizada para o seu progresso.</p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
@@ -57,7 +108,6 @@ export function SecaoFuncionamento() {
           {prints.map((print, idx) => (
             <div key={idx} className="flex flex-col gap-6 group cursor-zoom-in" onClick={() => setSelectedImage(print.src)}>
               <div className="relative aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl transition-all duration-500 group-hover:border-white/30 group-hover:shadow-yellow-500/5">
-               
                 <Image 
                   src={print.src} 
                   alt={print.alt} 
@@ -91,33 +141,7 @@ export function SecaoFuncionamento() {
 
       </div>
 
-      {selectedImage && (
-        <div 
-          className="fixed inset-0 z-[200] flex items-center justify-center p-4 md:p-12 bg-black/95 backdrop-blur-sm cursor-zoom-out animate-in fade-in duration-300"
-          onClick={() => setSelectedImage(null)}
-        >
-          <button 
-            className="absolute top-8 right-8 text-white/50 hover:text-white transition-colors"
-            onClick={() => setSelectedImage(null)}
-          >
-            <X size={40} />
-          </button>
-          
-          <div 
-            className="relative w-full max-w-6xl aspect-video rounded-2xl overflow-hidden shadow-2xl border border-white/10 cursor-default"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image 
-              src={selectedImage} 
-              alt="Preview ampliado" 
-              fill 
-              className="object-contain bg-zinc-900"
-              quality={100}
-              unoptimized
-            />
-          </div>
-        </div>
-      )}
+      <ModalPortal />
     </section>
   );
 }

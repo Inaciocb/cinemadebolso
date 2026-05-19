@@ -1,15 +1,63 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { CORES } from "../constantes";
 
-// Importações estáticas das imagens
 import foto1 from "@/public/foto1.jpeg";
 import foto2 from "@/public/foto2.jpeg";
 import logo from "@/public/logo.png";
 
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
 export function Hero() {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const playerRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const loadYouTubeAPI = () => {
+      if (!window.YT) {
+        const script = document.createElement("script");
+        script.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName("script")[0];
+        firstScriptTag.parentNode?.insertBefore(script, firstScriptTag);
+
+        window.onYouTubeIframeAPIReady = initPlayer;
+      } else {
+        initPlayer();
+      }
+    };
+
+    const initPlayer = () => {
+      playerRef.current = new window.YT.Player("youtube-player", {
+        videoId: "NhvvkVAwNRY",
+        playerVars: {
+          autoplay: 1,
+          controls: 1,
+          modestbranding: 1,
+          rel: 0,
+        },
+      });
+    };
+
+    loadYouTubeAPI();
+
+    return () => {
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+      }
+    };
+  }, [isPlaying]);
+
   return (
     <section className="relative flex flex-col items-center pt-12 md:pt-24 pb-24 px-4 text-center min-h-[90vh] justify-center overflow-hidden isolate">
-      
       <div className="absolute top-0 left-0 w-full h-[150px] pointer-events-none -z-10 overflow-hidden">
         <div 
           className="absolute top-[-100px] left-1/2 -translate-x-1/2 w-full h-[200px] blur-[80px] opacity-30"
@@ -81,8 +129,31 @@ export function Hero() {
           APRENDA A GRAVAR VÍDEOS BONITOS COM O CELULAR, NA PRÁTICA!
         </p>
 
-        <div className="w-full max-w-3xl aspect-video rounded-3xl border shadow-[0_0_100px_rgba(0,0,0,0.9)] overflow-hidden mb-16 z-10 relative bg-zinc-900" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
-          <iframe className="w-full h-full" src="https://www.youtube.com/embed/tRxWPij0-KA?controls=1&modestbranding=1&rel=0" title="VSL" allowFullScreen></iframe>
+        <div className="w-full max-w-3xl aspect-video rounded-3xl border shadow-[0_0_100px_rgba(0,0,0,0.9)] overflow-hidden mb-16 z-10 relative bg-zinc-900 group cursor-pointer" style={{ borderColor: "rgba(255,255,255,0.06)" }}>
+          {!isPlaying ? (
+            <div 
+              className="absolute inset-0 z-20 flex items-center justify-center transition-all duration-500"
+              onClick={() => setIsPlaying(true)}
+            >
+              <img 
+                src="https://img.youtube.com/vi/NhvvkVAwNRY/maxresdefault.jpg" 
+                alt="Thumbnail" 
+                className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-40 transition-all duration-700"
+              />
+              
+              <div 
+                className="relative w-20 h-20 md:w-28 md:h-28 flex items-center justify-center rounded-full backdrop-blur-md border-2 border-white/30 transition-all duration-300 group-hover:scale-110 group-hover:border-white/60"
+                style={{ backgroundColor: "rgba(255,255,255,0.05)" }}
+              >
+                <div 
+                  className="w-0 h-0 border-t-[15px] border-t-transparent border-l-[25px] border-b-[15px] border-b-transparent ml-2" 
+                  style={{ borderLeftColor: "#fff" }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div id="youtube-player" className="absolute inset-0 w-full h-full"></div>
+          )}
         </div>
 
         <div className="max-w-2xl mb-10 space-y-4 text-base md:text-xl leading-relaxed px-4">
